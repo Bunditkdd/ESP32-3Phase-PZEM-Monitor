@@ -1,0 +1,22 @@
+# ⚡ ESP32 3-Phase Power Monitor (PZEM-004T)
+
+ระบบมอนิเตอร์การใช้ไฟฟ้า 3 เฟส โดยใช้ ESP32 อ่านค่าจากเซนเซอร์ PZEM-004T และส่งข้อมูลผ่าน MQTT ไปยัง Home Assistant หรือ Dashboard อื่นๆ
+
+## 🛠 Features
+* วัดค่า Voltage, Current, Power, และ Energy แยกแต่ละเฟส
+* ส่งข้อมูลผ่านโปรโตคอล MQTT
+* มีระบบจัดการความปลอดภัยของข้อมูล (Secret Management)
+
+## 🚀 Installation & Setup
+1. Clone หรือ Download โปรเจกต์นี้ลงเครื่อง
+2. **สำคัญ:** ก๊อปปี้ไฟล์ `include/secrets.h.example` และเปลี่ยนชื่อเป็น `include/secrets.h`
+3. เปิดไฟล์ `include/secrets.h` แล้วกรอกข้อมูล WiFi และ MQTT ของคุณ
+4. Compile และ Upload ผ่าน PlatformIO
+
+## 📂 Project Structure
+* `src/`: โค้ดหลักของระบบและการจัดการ MQTT
+* `include/`: ไฟล์ Header และการตั้งค่าความปลอดภัย (secrets.h)
+* `lib/`: ไลบรารีเสริมที่ใช้ในโปรเจกต์
+
+## 📝 License
+จัดทำโดย Bunditkdd (Poy) - โปรเจกต์เพื่อการศึกษาด้านวิศวกรรมไฟฟ้า
