@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <PZEM004Tv30.h>
 
-// ลบ Define RX/TX เดิมออก เพราะเราจะไประบุแยกกันใน .cpp
 #define NUM_PZEMS 3
 #define PZEMR_RX 35
 #define PZEMR_TX 32
@@ -23,7 +22,6 @@ struct TotalData {
   float total_power;
   float total_energy;
   float total_current;
-  float avg_voltage; // ปลดคอมเมนต์ออกเพื่อให้ใช้งานได้
 };
 
 extern PhaseData phases[NUM_PZEMS];

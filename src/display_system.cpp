@@ -6,10 +6,12 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 unsigned long lastPageChange = 0;
 int currentPage = 0; // 0:Phase A, 1:Phase B, 2:Phase C
 
+
 void setupDisplay() {
-  lcd.init();      // สำหรับบาง Library ต้องใช้ init() แทน begin()
+  lcd.init();
   lcd.backlight();
 }
+
 
 void updateDisplay(bool isWifiConnected) {
   unsigned long currentMillis = millis();
@@ -49,6 +51,7 @@ void updateDisplay(bool isWifiConnected) {
   lcd.setCursor(0, 3);
   lcd.print("E: "); lcd.print(phases[currentPage].energy, 2); lcd.print("kWh");
   
+  // แสดง RSSI ที่มุมขวาล่าง
   lcd.setCursor(15, 3);
   if (isWifiConnected) {
     lcd.print(rssi);

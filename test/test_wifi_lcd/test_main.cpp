@@ -38,7 +38,7 @@ void loop() {
         lcd.setCursor(0, 1);
         lcd.print("RSSI: ");
         lcd.print(WiFi.RSSI());
-        lcd.print(" dBm    "); // เว้นวรรคข้างหลังไว้ 4-5 ช่องเพื่อทับเลขเก่า
+        lcd.print(" dBm    ");
     } else {
         lcd.setCursor(0, 0);
         lcd.print("WiFi: Disconnected");
