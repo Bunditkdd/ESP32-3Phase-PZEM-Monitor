@@ -21,7 +21,7 @@ extern PhaseData phases[3];
 extern TotalData totals;
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
   delay(500);
   
   Serial1.begin(9600, SERIAL_8N1, 27, 26); //L1 
@@ -42,7 +42,7 @@ void setup() {
   unsigned long startAttempt = millis();
   while (WiFi.status() != WL_CONNECTED && millis() - startAttempt < 10000) { 
     delay(500);
-    debugPrint(".");
+    //debugPrint(".");
   }
 
   if (WiFi.status() != WL_CONNECTED){
@@ -56,7 +56,7 @@ void setup() {
   setupMQTT(); 
   
   lcd.clear();
-  lcd.print("Monitoring...");
+  lcd.print("Monitoring!...");
 }
 
 void loop() {
@@ -66,11 +66,11 @@ void loop() {
   if (WiFi.status() != WL_CONNECTED) {
     if (wifiDisconnectedSince == 0) {
       wifiDisconnectedSince = currentMillis;
-      debugPrintln("WiFi Lost!");
+      //debugPrintln("WiFi Lost!");
     }
     // รีบอร์ดถ้า WiFi ไม่กลับมาใน 1 ชั่วโมง
     if (currentMillis - wifiDisconnectedSince >= restartThreshold) {
-      debugPrintln("WiFi down for 1 hour. Restarting ESP32...");
+      //debugPrintln("WiFi down for 1 hour. Restarting ESP32...");
       ESP.restart();
     }
   } else { // WiFi เชื่อมต่อแล้ว
@@ -103,6 +103,6 @@ void loop() {
   }
 
     // Debug output
-    debugPrintf("P1: %.1fW, P2: %.1fW, P3: %.1fW | Total: %.1fW\n", 
-                  phases[0].power, phases[1].power, phases[2].power, totals.total_power);
+    //debugPrintf("P1: %.1fW, P2: %.1fW, P3: %.1fW | Total: %.1fW\n", 
+    //              phases[0].power, phases[1].power, phases[2].power, totals.total_power);
 }

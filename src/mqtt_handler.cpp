@@ -14,6 +14,7 @@ PubSubClient client(espClient);
 void setupMQTT() {
   client.setServer(mqtt_server, mqtt_port);
   client.setBufferSize(1024); // รองรับ JSON ขนาดใหญ่ขึ้น
+  client.setKeepAlive(120); // ตั้งค่า Keep Alive เป็น 120 วินาที
   sprintf(mqtt_topic, "energy/%s/data", building_id);
 }
 
@@ -22,7 +23,7 @@ void reconnectMQTT() {
   if (now - lastReconnectAttempt > 5000) {
     lastReconnectAttempt = now;
     
-    debugPrintln("Attempting MQTT connection...");
+    //debugPrintln("Attempting MQTT connection...");
     
     // สร้าง Client ID และ Topic ตามชื่อตึกอัตโนมัติ
     String clientId = "ESP32_PZEM_" + String(building_id);
@@ -32,14 +33,14 @@ void reconnectMQTT() {
     if (client.connect(clientId.c_str(), mqtt_user, mqtt_pass, 
                        statusTopic.c_str(), 1, true, "offline")) { 
       
-      debugPrintln("MQTT connected");
+      //debugPrintln("MQTT connected");
       
       // เมื่อต่อติด ให้ประกาศว่าตึกนี้ "online" ทันที
       client.publish(statusTopic.c_str(), "online", true); 
       
       lastReconnectAttempt = 0;
     } else {
-      debugPrintf("failed, rc=%d. Try again in 5 seconds\n", client.state());
+      //debugPrintf("failed, rc=%d. Try again in 5 seconds\n", client.state());
     }
   }
 }
