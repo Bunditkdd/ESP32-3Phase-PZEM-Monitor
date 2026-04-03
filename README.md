@@ -1,7 +1,13 @@
 # ⚡ ESP32 3-Phase Power Monitor (PZEM-004T)
 
 ระบบมอนิเตอร์การใช้ไฟฟ้า 3 เฟส โดยใช้ ESP32 อ่านค่าจากเซนเซอร์ PZEM-004T และส่งข้อมูลผ่าน MQTT ไปยัง Home Assistant หรือ Dashboard อื่นๆ
+## 📗 Update 
+* 12/3/2026 V1.1 [Latest](https://github.com/Bunditkdd/ESP32-3Phase-PZEM-Monitor.git)
+  - แก้ไขโค้ตให้สามารถใช้งานกับ CT ขนาด 600/5A เท่านั้น
+  - เพิ่มระบบเช็คสถาณะ ESP ว่าตึกไหน ออนไลน์ หรือ ออฟไลน์
+  - จัดโค้ตลบคอมเม้นที่ไม่จำเป็น
 
+* [3Phase-PZEM-Monitor v1.0-Alpha](https://github.com/Bunditkdd/ESP32-3Phase-PZEM-Monitor/releases/tag/v1.0.0)
 ## 🛠 Features
 * วัดค่า Voltage, Current, Power, และ Energy แยกแต่ละเฟส
 * ส่งข้อมูลผ่านโปรโตคอล MQTT
