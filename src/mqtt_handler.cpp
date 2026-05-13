@@ -1,44 +1,46 @@
 #include "mqtt_handler.h"
 #include "pzem_reader.h"
 #include "debug_contol.h"
-#include "secrets.h"
+#include "ConfigManager.h"
 
+
+extern ConfigManager config;
 
 char mqtt_topic[50];
 
-unsigned long lastReconnectAttempt = 0;
+unsigned long lastReconnectMQTT = 0;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
 void setupMQTT() {
-  client.setServer(mqtt_server, mqtt_port);
+  client.setServer(config.mqtt_server.c_str(), config.mqtt_port);
   client.setBufferSize(1024); // รองรับ JSON ขนาดใหญ่ขึ้น
   client.setKeepAlive(120); // ตั้งค่า Keep Alive เป็น 120 วินาที
-  sprintf(mqtt_topic, "energy/%s/data", building_id);
+  sprintf(mqtt_topic, "energy/%s/data", config.building_id.c_str());
 }
 
 void reconnectMQTT() {
   unsigned long now = millis();
-  if (now - lastReconnectAttempt > 5000) {
-    lastReconnectAttempt = now;
+  if (now - lastReconnectMQTT > 5000) {
+    lastReconnectMQTT = now;
     
     //debugPrintln("Attempting MQTT connection...");
     
     // สร้าง Client ID และ Topic ตามชื่อตึกอัตโนมัติ
-    String clientId = "ESP32_PZEM_" + String(building_id);
-    String statusTopic = "energy/" + String(building_id) + "/status";
+    String clientId = "ESP32_PZEM_" + config.building_id;
+    String statusTopic = "energy/" + config.building_id + "/status";
 
     // เชื่อมต่อพร้อมฝาก "พินัยกรรม" (Last Will) ไว้ที่ statusTopic
-    if (client.connect(clientId.c_str(), mqtt_user, mqtt_pass, 
-                       statusTopic.c_str(), 1, true, "offline")) { 
+    if (client.connect(clientId.c_str(), config.mqtt_user.c_str(), config.mqtt_pass.c_str(), 
+                   statusTopic.c_str(), 1, true, "offline")) { 
       
       //debugPrintln("MQTT connected");
       
       // เมื่อต่อติด ให้ประกาศว่าตึกนี้ "online" ทันที
       client.publish(statusTopic.c_str(), "online", true); 
       
-      lastReconnectAttempt = 0;
+      lastReconnectMQTT = 0;
     } else {
       //debugPrintf("failed, rc=%d. Try again in 5 seconds\n", client.state());
     }
