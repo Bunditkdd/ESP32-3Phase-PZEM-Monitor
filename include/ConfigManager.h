@@ -84,7 +84,12 @@ private:
 public:
     ConfigManager() : server(80), apIP(192, 168, 4, 1) {}
     String ssid, pass, mqtt_server, mqtt_user, mqtt_pass, building_id, ct1_set, ct2_set, ct3_set;
+
     int mqtt_port;
+
+    float ct1_factor = 1.0;
+    float ct2_factor = 1.0;
+    float ct3_factor = 1.0;
     
     void begin() {
         pref.begin("iot-config", true);
@@ -158,6 +163,16 @@ public:
     ct1_set     = pref.getString("ct1_set", ct1_set);
     ct2_set     = pref.getString("ct2_set", ct2_set);
     ct3_set     = pref.getString("ct3_set", ct3_set);
+
+    ct1_set = pref.getString("ct1_set", "100"); // Default เป็น 100 ถ้าไม่มีค่า
+    ct2_set = pref.getString("ct2_set", "100");
+    ct3_set = pref.getString("ct3_set", "100");
+
+    // คำนวณค่า Scale Factor ทิ้งไว้เลย (หาร 100.0)
+    ct1_factor = ct1_set.toFloat() / 100.0;
+    ct2_factor = ct2_set.toFloat() / 100.0;
+    ct3_factor = ct3_set.toFloat() / 100.0;
+
 
     pref.end();
     }
